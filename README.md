@@ -31,8 +31,8 @@ For those Bitcoiners that want to put their QR codes (Bitcoin & LND)
 
 1. Create a QR code with your wallet address could be Bech, 3 or 1. You could use several services online or you can download it direcly from your wallet software.
 2. Go to http://javl.github.io/image2cpp/ upload your image, edit for 200px x 200px White and invert colours.
-3. https://github.com/GuruSR/Watchy_GSR/blob/main/Images/1.png
-4. https://github.com/GuruSR/Watchy_GSR/blob/main/Images/2.png
+3. (https://github.com/GuruSR/Watchy_GSR/blob/main/Images/1.png)
+4. (https://github.com/GuruSR/Watchy_GSR/blob/main/Images/2.png)
 5. Copy this similar lines:
 
 	"""0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
