@@ -2,7 +2,6 @@
 #define WATCHY_GSR_H
 
 #include <core_version.h>
-#include <Watchy.h>
 #include "Defines_GSR.h"
 #include "Web-HTML.h"
 #include <Arduino.h>
@@ -26,20 +25,21 @@
 #include "ArduinoNvs.h"
 
 #include "Bronova_Regular13pt7b.h"
+#include "aAntiCorona10pt7b.h"
+#include "aAntiCorona11pt7b.h"
 #include "aAntiCorona12pt7b.h"
 #include "aAntiCorona13pt7b.h"
 #include "aAntiCorona14pt7b.h"
 #include "aAntiCorona15pt7b.h"
 #include "aAntiCorona16pt7b.h"
 #include "aAntiCorona36pt7b.h"
-#include "resource.h"
 
 class WatchyGSR{
     public:
         static SmallRTC SRTC;
         static SmallNTP SNTP;
         static GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display;
-        static constexpr const char* Build = "1.4.2";
+        static constexpr const char* Build = "1.4.3E";
         enum DesOps {dSTATIC, dLEFT, dRIGHT, dCENTER};
     public:
         WatchyGSR();
@@ -56,7 +56,7 @@ class WatchyGSR{
         virtual float BatteryRead() final;
         virtual bool IsDark() final;
         IRAM_ATTR virtual void handleInterrupt() final;
-        void drawChargeMe();
+        void drawChargeMe(bool Dark = false);
         void drawStatus();
         virtual void VibeTo(bool Mode) final;
         virtual String MakeTime(int Hour, int Minutes, bool& Alarm) final;
@@ -65,7 +65,8 @@ class WatchyGSR{
         virtual uint16_t ForeColor() final;
         virtual uint16_t BackColor() final;
         void InsertPost();
-        void InsertBitmap();
+        bool OverrideBitmap();
+        bool OverrideSleepBitmap();
         void InsertDefaults();
         void InsertOnMinute();
         void InsertWiFi();
@@ -74,6 +75,7 @@ class WatchyGSR{
         void InsertDrawWatchStyle(uint8_t StyleID);
         void InsertInitWatchStyle(uint8_t StyleID);
         virtual uint8_t AddWatchStyle(String StyleName) final;
+        String InsertNTPServer();
         virtual void AllowDefaultWatchStyles(bool Allow = true) final;
         virtual void AskForWiFi() final;
         virtual wl_status_t currentWiFi() final;
@@ -85,7 +87,8 @@ class WatchyGSR{
    private:
         void setStatus(String Status);
         void drawMenu();
-        void drawData(String dData, byte Left, byte Bottom, WatchyGSR::DesOps Style, bool isTime = false, bool PM = false);
+        void setFontFor(String O, const GFXfont *Normal, const GFXfont *Small, const GFXfont *Smaller, byte Gutter = 5);
+        void drawData(String dData, byte Left, byte Bottom, WatchyGSR::DesOps Style, byte Gutter, bool isTime = false, bool PM = false);
         void GoDark();
         void detectBattery();
         void ProcessNTP();
